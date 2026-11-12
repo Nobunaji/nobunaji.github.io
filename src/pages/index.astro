@@ -1,0 +1,186 @@
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Nobunaji | Cyber Portfolio</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap');
+
+      :root {
+        --bg: #0a0a0c;
+        --neon-green: #00ff41;
+        --neon-cyan: #00f0ff;
+        --neon-red: #ff0055;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Fira Code', monospace;
+        font-variant-ligatures: contextual;
+        background: var(--bg);
+        color: var(--neon-green);
+        overflow-x: hidden;
+      }
+
+      #matrix {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.12;
+        pointer-events: none;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(0, 240, 255, 0.08),
+          rgba(0, 240, 255, 0.08) 1px,
+          transparent 2px,
+          transparent 4px
+        );
+        mix-blend-mode: screen;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1rem 3rem;
+      }
+
+      h1 {
+        color: var(--neon-cyan);
+        text-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
+      }
+
+      .lead {
+        border-left: 2px solid var(--neon-red);
+        padding-left: 0.8rem;
+        margin-bottom: 2rem;
+      }
+
+      .terminal {
+        background: #000;
+        border: 1px solid rgba(0, 255, 65, 0.5);
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+      }
+
+      .output {
+        min-height: 180px;
+        white-space: pre-wrap;
+        line-height: 1.5;
+      }
+
+      .prompt-line {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .prompt {
+        color: var(--neon-cyan);
+      }
+
+      #cmd {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: var(--neon-green);
+        font: inherit;
+        outline: none;
+        caret-color: var(--neon-red);
+      }
+
+      .hint { color: rgba(0, 255, 65, 0.75); font-size: 0.92rem; }
+      a { color: var(--neon-cyan); }
+    </style>
+  </head>
+  <body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <main>
+      <h1>root@portfolio:~#</h1>
+      <p class="lead">Portfolio cyber minimal en Astro.</p>
+      <section class="terminal" aria-label="Terminal interactif">
+        <div class="output" id="output">Tape une commande:
+help
+        </div>
+        <div class="prompt-line">
+          <span class="prompt">root@portfolio:~#</span>
+          <input id="cmd" autocomplete="off" spellcheck="false" aria-label="Commande terminal" />
+        </div>
+      </section>
+      <p class="hint">Commandes: <code>ls</code>, <code>cat skills.md</code>, <code>contact</code>, <code>clear</code></p>
+    </main>
+
+    <script>
+      const output = document.getElementById('output');
+      const input = document.getElementById('cmd');
+      const projectList = ['project-alpha', 'project-beta', 'project-gamma'];
+
+      const commands = {
+        help: 'help\nls\ncat skills.md\ncontact\nclear',
+        ls: `projects/\n${projectList.join('\n')}\nskills.md\ncontact.txt`,
+        'cat skills.md': '- Astro\n- TypeScript\n- CSS / UI cyber\n- Performance web',
+        contact: 'mail: hello@nobunaji.dev\ngithub: https://github.com/Nobunaji'
+      };
+
+      input.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter') return;
+        const command = input.value.trim();
+        if (!command) return;
+
+        if (command === 'clear') {
+          output.textContent = '';
+          input.value = '';
+          return;
+        }
+
+        const response = commands[command] || `commande inconnue: ${command}`;
+        output.textContent += `\nroot@portfolio:~# ${command}\n${response}`;
+        output.scrollTop = output.scrollHeight;
+        input.value = '';
+      });
+
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      const glyphs = '01アカサタナハマヤラワ'.split('');
+      let columns = [];
+
+      const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const colCount = Math.floor(canvas.width / 16);
+        columns = Array(colCount).fill(1);
+      };
+
+      const draw = () => {
+        ctx.fillStyle = 'rgba(10,10,12,0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff41';
+        ctx.font = '14px Fira Code';
+
+        columns.forEach((y, x) => {
+          const text = glyphs[Math.floor(Math.random() * glyphs.length)];
+          ctx.fillText(text, x * 16, y * 16);
+          columns[x] = y * 16 > canvas.height && Math.random() > 0.98 ? 0 : y + 1;
+        });
+      };
+
+      resize();
+      setInterval(draw, 70);
+      window.addEventListener('resize', resize);
+      input.focus();
+    </script>
+  </body>
+</html>
