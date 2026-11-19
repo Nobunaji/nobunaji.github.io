@@ -1,0 +1,36 @@
+---
+let scoreLabel = "--";
+
+try {
+  const apiKey = import.meta.env.ROOTME_API_KEY;
+  const userId = import.meta.env.ROOTME_USER_ID;
+
+  if (apiKey && userId) {
+    const response = await fetch(`https://api.www.root-me.org/auteurs/${userId}`, {
+      headers: {
+        Cookie: `api_key=${apiKey}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      scoreLabel = `${data.score ?? "N/A"} pts`;
+    }
+  }
+} catch (error) {
+  console.error("Failed to fetch Root-Me score:", error);
+}
+---
+
+<span class="rootme-score">{scoreLabel}</span>
+
+<style>
+  .rootme-score {
+    background: rgba(0, 240, 255, 0.2);
+    color: #00f0ff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+</style>
