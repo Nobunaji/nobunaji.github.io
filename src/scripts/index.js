@@ -8,16 +8,12 @@ let currentLang = localStorage.getItem('lang') || 'fr';
 
 const translations = {
   en: {
-    help: 'help\nls\ncat skills.md\ncontact\nclear',
-    ls: `projects/\n${projectList.join('\n')}\n`,
-    'cat skills.md': '- Astro\n- TypeScript\n- CSS / UI cyber\n- Performance web',
+    help: 'help\ncontact\nclear',
     contact: 'mail: nicolas.brion.pro@gmail.com\ngithub: https://github.com/Nobunaji',
     unknown: 'unknown command'
   },
   fr: {
-    help: 'help\nls\ncat skills.md\ncontact\nclear',
-    ls: `projects/\n${projectList.join('\n')}\n`,
-    'cat skills.md': '- Astro\n- TypeScript\n- CSS / UI cyber\n- Performance web',
+    help: 'help\ncontact\nclear',
     contact: 'mail: nicolas.brion.pro@gmail.com\ngithub: https://github.com/Nobunaji',
     unknown: 'commande inconnue'
   }
@@ -60,17 +56,28 @@ input.addEventListener('keydown', (event) => {
   if (!command) return;
 
   if (command === 'clear') {
-    output.textContent = '';
+    output.innerHTML = '';
     input.value = '';
     return;
   }
 
   const commands = getCommands();
   const response = commands[command] || `${translations[currentLang].unknown}: ${command}`;
-  output.textContent += `\nroot@portfolio:~# ${command}\n${response}`;
+  output.innerHTML += `<span class="prompt-output">root@portfolio:~#</span> ${escapeHtml(command)}\n${escapeHtml(response)}\n`;
   output.scrollTop = output.scrollHeight;
   input.value = '';
 });
+
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
 
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');

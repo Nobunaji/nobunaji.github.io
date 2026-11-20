@@ -11,7 +11,7 @@ import indexScript from '../scripts/index.js?raw';
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <title>Nobunaji | Cyber Portfolio</title>
-    <style>
+    <style is:global>
       @import url('../styles/index.css');
     </style>
   </head>
@@ -49,15 +49,13 @@ import indexScript from '../scripts/index.js?raw';
       </section>
       
       <section class="terminal" aria-label="Terminal interactif">
-        <div class="output" id="output" data-en-placeholder="Type a command:&#10;help" data-fr-placeholder="Tape une commande:&#10;help">Tape une commande:
-help
-        </div>
+        <div class="output" id="output"></div>
         <div class="prompt-line">
           <span class="prompt">root@portfolio:~#</span>
           <input id="cmd" autocomplete="off" spellcheck="false" aria-label="Commande terminal" />
         </div>
       </section>
-      <p class="hint" data-en="Commands: help, ls, cat skills.md, contact, clear" data-fr="Commandes: help, ls, cat skills.md, contact, clear">Commandes: <code>ls</code>, <code>cat skills.md</code>, <code>contact</code>, <code>clear</code></p>
+      <p class="hint" data-en="Commands: help, contact, clear" data-fr="Commandes: help, contact, clear">Commandes: <code>help</code>, <code>contact</code>, <code>clear</code></p>
     </main>
 
     <footer>
