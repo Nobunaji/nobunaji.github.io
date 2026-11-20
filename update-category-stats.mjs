@@ -2,14 +2,36 @@
 
 /**
  * Update Root-Me category statistics
- * Run: node update-category-stats.mjs
+ * Run: npm run update-stats
  */
 
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = new URL('.', import.meta.url).pathname.slice(1); // Remove leading /
+
+// Load .env file
+function loadEnv() {
+  try {
+    const envPath = join(__dirname, '.env');
+    const envContent = readFileSync(envPath, 'utf-8');
+    envContent.split('\n').forEach((line) => {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#')) {
+        const [key, ...valueParts] = trimmed.split('=');
+        const value = valueParts.join('=').trim();
+        if (key && value) {
+          process.env[key.trim()] = value;
+        }
+      }
+    });
+  } catch (error) {
+    // .env file not found, use existing environment variables
+  }
+}
+
+loadEnv();
 
 const API_KEY = process.env.ROOTME_API_KEY;
 const USER_ID = process.env.ROOTME_USER_ID;
