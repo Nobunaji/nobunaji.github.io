@@ -29,9 +29,6 @@ function switchLanguage(lang) {
   
   document.documentElement.lang = lang;
   
-  const langBtn = document.getElementById('lang-toggle');
-  langBtn.querySelector('.lang-text').textContent = lang === 'en' ? 'EN' : 'FR';
-  
   document.querySelectorAll('[data-en][data-fr]').forEach(el => {
     el.textContent = lang === 'en' ? el.dataset.en : el.dataset.fr;
   });
@@ -47,9 +44,9 @@ function switchLanguage(lang) {
 function initLanguage() {
   switchLanguage(currentLang);
   
-  document.getElementById('lang-toggle').addEventListener('click', () => {
-    const newLang = currentLang === 'en' ? 'fr' : 'en';
-    switchLanguage(newLang);
+  // Écouter les changements de langue depuis le composant LangToggle
+  window.addEventListener('langchange', (event) => {
+    switchLanguage(event.detail.lang);
   });
 }
 

@@ -1,0 +1,27 @@
+/* Bash - Kali Color Palette */
+#challenge-content pre code.language-bash .hljs-keyword,
+#challenge-content pre code.language-bash .hljs-meta,
+#challenge-content pre code.language-bash .hljs-built_in {
+  color: #ff00ff;
+}
+
+#challenge-content pre code.language-bash .hljs-string,
+#challenge-content pre code.language-bash .hljs-variable,
+#challenge-content pre code.language-bash .hljs-attr {
+  color: #ffffff;
+}
+
+#challenge-content pre code.language-bash .hljs-title.function_,
+#challenge-content pre code.language-bash .hljs-function,
+#challenge-content pre code.language-bash .hljs-name {
+  color: #00ffff;
+}
+
+#challenge-content pre code.language-bash .hljs-comment {
+  color: #808080;
+}
+
+#challenge-content pre code.language-bash .hljs-number,
+#challenge-content pre code.language-bash .hljs-literal {
+  color: #ffff00;
+}

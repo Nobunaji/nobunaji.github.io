@@ -1,0 +1,31 @@
+/* Python */
+#challenge-content pre code.language-python .hljs-keyword,
+#challenge-content pre code.language-python .hljs-meta .hljs-keyword {
+  color: #ff79c6;
+}
+
+#challenge-content pre code.language-python .hljs-title.function_,
+#challenge-content pre code.language-python .hljs-function,
+#challenge-content pre code.language-python .hljs-title.class_ {
+  color: #8be9fd;
+}
+
+#challenge-content pre code.language-python .hljs-string,
+#challenge-content pre code.language-python .hljs-meta .hljs-string,
+#challenge-content pre code.language-python .hljs-doctag {
+  color: #f1fa8c;
+}
+
+#challenge-content pre code.language-python .hljs-number,
+#challenge-content pre code.language-python .hljs-literal {
+  color: #bd93f9;
+}
+
+#challenge-content pre code.language-python .hljs-comment {
+  color: #6272a4;
+}
+
+#challenge-content pre code.language-python .hljs-built_in,
+#challenge-content pre code.language-python .hljs-variable.language_ {
+  color: #50fa7b;
+}

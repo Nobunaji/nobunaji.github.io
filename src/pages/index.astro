@@ -1,6 +1,6 @@
 ---
-import SkillSphere from '../components/SkillSphere.astro';
 import RootMeBadge from '../components/RootMeBadge.astro';
+import LangToggle from '../components/LangToggle.astro';
 import indexScript from '../scripts/index.js?raw';
 ---
 
@@ -8,6 +8,8 @@ import indexScript from '../scripts/index.js?raw';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <title>Nobunaji | Cyber Portfolio</title>
     <style>
       @import url('../styles/index.css');
@@ -18,20 +20,18 @@ import indexScript from '../scripts/index.js?raw';
     <main>
       <div class="header-controls">
         <h1>root@portfolio:~#</h1>
-        <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language" title="English / Français">
-          <span class="lang-icon">🌐</span> <span class="lang-text">EN</span>
-        </button>
+        <LangToggle />
       </div>
       <p class="lead" data-en="Minimal cyber portfolio in Astro." data-fr="Portfolio cyber minimal en Astro.">Portfolio cyber minimal en Astro.</p>
       
       <section class="buttons-grid">
-        <button class="feature-button" id="rootme-btn">
+        <a class="feature-button" id="rootme-btn" href="/root-me">
           <div class="button-header">
             <h3 data-en="Root-me" data-fr="Root-me">Root-me</h3>
             <RootMeBadge />
           </div>
-          <p class="button-desc" data-en="Security challenges and CTF platform" data-fr="Plateforme de défis de sécurité et CTF">Plateforme de défis de sécurité et CTF</p>
-        </button>
+          <p class="button-desc" data-en="My Root-Me challenge notes, organized by category." data-fr="Mes notes de challenges Root-Me, classées par catégorie.">Mes notes de challenges Root-Me, classées par catégorie.</p>
+        </a>
 
         <button class="feature-button">
           <div class="button-header">

@@ -1,0 +1,269 @@
+---
+import { readdirSync, readFileSync } from 'node:fs';
+import { basename, extname, join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { marked } from 'marked';
+import hljs from 'highlight.js';
+import LangToggle from '../components/LangToggle.astro';
+import '../styles/root-me.css';
+import rootMeScript from '../scripts/root-me.js?raw';
+
+// Use process.cwd() to get the project root, which is more reliable than import.meta.url
+const PROJECT_ROOT = process.cwd();
+const ROOT_ME_DIR = join(PROJECT_ROOT, 'src', 'data', 'root-me-challenges');
+const STATS_FILE = join(PROJECT_ROOT, 'src', 'data', 'category-stats.json');
+marked.use({
+  renderer: {
+    code(token) {
+      const code = typeof token === 'string' ? token : token.text;
+      const language = typeof token === 'string' ? '' : (token.lang || '');
+      let highlighted = hljs.highlightAuto(code).value;
+
+      if (language && hljs.getLanguage(language)) {
+        highlighted = hljs.highlight(code, { language }).value;
+      }
+
+      const languageClass = language ? ` class="hljs language-${escapeHtml(language)}"` : ' class="hljs"';
+      return `<pre><code${languageClass}>${highlighted}</code></pre>\n`;
+    }
+  }
+});
+
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function extractTitle(content, fallbackName) {
+  const heading = content.match(/^#\s+(.+)$/m);
+  if (heading) {
+    return heading[1].trim();
+  }
+
+  const firstMeaningfulLine = content
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find((line) => line.length > 0);
+
+  return firstMeaningfulLine
+    ? firstMeaningfulLine.replace(/^#{1,6}\s*/, '').replace(/\*\*/g, '').trim()
+    : fallbackName;
+}
+
+function getLanguagePairPath(filePath) {
+  const relativePath = relative(ROOT_ME_DIR, filePath).replace(/\\/g, '/');
+  const languageMatch = relativePath.match(/\.(fr|en)\.md$/i);
+  if (!languageMatch) {
+    return null;
+  }
+
+  const language = languageMatch[1].toLowerCase();
+  const baseRelativePath = relativePath.replace(/\.(fr|en)\.md$/i, '.md');
+  return { relativePath, baseRelativePath, language };
+}
+
+function walkMarkdownFiles(rootDir) {
+  const files = [];
+
+  function walk(currentDir) {
+    const entries = readdirSync(currentDir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of entries) {
+      const fullPath = join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        walk(fullPath);
+        continue;
+      }
+
+      if (entry.isFile() && extname(entry.name).toLowerCase() === '.md') {
+        files.push(fullPath);
+      }
+    }
+  }
+
+  walk(rootDir);
+  return files;
+}
+
+function buildTree(challenges) {
+  const root = { directories: [], files: [] };
+
+  function createDirectory(name) {
+    return { name, directories: [], files: [] };
+  }
+
+  for (const challenge of challenges) {
+    const segments = challenge.relativePath.split('/');
+    const fileName = segments.pop();
+    let currentNode = root;
+
+    for (const segment of segments) {
+      let nextDirectory = currentNode.directories.find((directory) => directory.name === segment);
+      if (!nextDirectory) {
+        nextDirectory = createDirectory(segment);
+        currentNode.directories.push(nextDirectory);
+        currentNode.directories.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      currentNode = nextDirectory;
+    }
+
+    currentNode.files.push({
+      id: challenge.id,
+      name: fileName,
+      title: challenge.title
+    });
+    currentNode.files.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  return root;
+}
+
+let folderIdCounter = 0;
+let categoryStats: Map<string, { percentage: number; solved: number; total: number }> = new Map();
+
+// Load category stats from file
+function loadCategoryStats() {
+  try {
+    console.log(`Looking for stats at: ${STATS_FILE}`);
+    const statsData = JSON.parse(readFileSync(STATS_FILE, 'utf-8'));
+    if (statsData.categoryStats && typeof statsData.categoryStats === 'object') {
+      for (const [category, stats] of Object.entries(statsData.categoryStats)) {
+        categoryStats.set(category, stats as any);
+      }
+      console.log(`✓ Loaded stats for ${categoryStats.size} categories`);
+    }
+  } catch (error) {
+    console.log(`✗ Could not load stats: ${(error as Error).message}`);
+  }
+}
+
+loadCategoryStats();
+
+function renderTree(node, depth = 0) {
+  const directoryMarkup = node.directories
+    .map((directory) => {
+      folderIdCounter += 1;
+      const folderId = `tree-folder-${folderIdCounter}`;
+      const childMarkup = renderTree(directory, depth + 1);
+      const stats = categoryStats.get(directory.name);
+      if (!stats && depth === 0) {
+        console.log(`No stats for directory: "${directory.name}". Available categories: ${Array.from(categoryStats.keys()).join(', ')}`);
+      }
+      const statsHtml = stats ? `<span class="category-badge" title="${stats.solved}/${stats.total} challenges">${stats.percentage}%</span>` : '';
+      return `<li class="tree-item tree-folder" style="--depth:${depth};"><button type="button" class="tree-label tree-toggle" aria-expanded="true" aria-controls="${folderId}"><span class="folder-name">${escapeHtml(directory.name)}</span>${statsHtml}</button><ul id="${folderId}" class="tree-children">${childMarkup}</ul></li>`;
+    })
+    .join('');
+
+  const fileMarkup = node.files
+    .map((file) => `<li class="tree-item tree-file" style="--depth:${depth};"><button type="button" class="challenge-link" data-challenge-id="${escapeHtml(file.id)}">${escapeHtml(file.title)}</button></li>`)
+    .join('');
+
+  return `${directoryMarkup}${fileMarkup}`;
+}
+
+let challenges = [];
+let loadError = '';
+
+try {
+  const markdownFiles = walkMarkdownFiles(ROOT_ME_DIR);
+  const pairs = new Map();
+
+  for (const fullPath of markdownFiles) {
+    const pair = getLanguagePairPath(fullPath);
+    if (!pair) {
+      continue;
+    }
+
+    if (!pairs.has(pair.baseRelativePath)) {
+      pairs.set(pair.baseRelativePath, {});
+    }
+
+    const content = readFileSync(fullPath, 'utf-8');
+    const fallbackName = basename(fullPath).replace(/\.(fr|en)\.md$/i, '');
+    const contentLines = content.split(/\r?\n/);
+    const contentWithoutFirstLine = contentLines.slice(1).join('\n');
+    pairs.get(pair.baseRelativePath)[pair.language] = {
+      content,
+      contentHtml: marked.parse(contentWithoutFirstLine),
+      title: extractTitle(content, fallbackName),
+      relativePath: pair.relativePath
+    };
+  }
+
+  challenges = Array.from(pairs.entries()).map(([baseRelativePath, languages], index) => {
+    const fr = languages.fr;
+    const en = languages.en;
+    const id = `challenge-${index + 1}`;
+    const relativePath = (fr || en).relativePath;
+
+    return {
+      id,
+      baseRelativePath,
+      relativePath,
+      fr,
+      en,
+      title: fr?.title || en?.title || basename(baseRelativePath, '.md')
+    };
+  });
+} catch (error) {
+  loadError = error instanceof Error ? error.message : 'Unable to load Root-Me challenges.';
+}
+
+const tree = buildTree(challenges);
+const treeMarkup = challenges.length > 0 ? renderTree(tree) : '';
+
+const generalDescription = {
+  fr: "Bienvenue dans l'espace Root-Me. Sélectionnez un challenge à gauche pour afficher son contenu.",
+  en: 'Welcome to the Root-Me space. Select a challenge on the left to display its content.'
+};
+
+const pageDataJson = JSON.stringify({
+  challenges,
+  generalDescription,
+  loadError,
+  categoryStats: Object.fromEntries(categoryStats)
+}).replace(/<\/script/gi, '<\\/script');
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <title>Nobunaji | Root-Me Challenges</title>
+  </head>
+  <body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <main class="rootme-layout">
+      <aside class="tree-panel" aria-label="Arborescence des challenges Root-Me">
+        <div class="panel-header">
+          <h1>Root-Me Challenges</h1>
+          <div class="panel-actions">
+            <LangToggle />
+            <a href="/" class="back-link">Back</a>
+          </div>
+        </div>
+        {challenges.length > 0 ? (
+          <ul class="tree-root" set:html={treeMarkup}></ul>
+        ) : (
+          <p class="empty-message">
+            {loadError ? `Impossible de charger les challenges: ${loadError}` : 'Aucun challenge markdown trouvé.'}
+          </p>
+        )}
+      </aside>
+
+      <section class="content-panel" aria-live="polite">
+        <h1 id="challenge-title"></h1>
+        <p id="challenge-meta"></p>
+        <article id="challenge-content"></article>
+      </section>
+    </main>
+
+    <script id="rootme-page-data" type="application/json" set:html={pageDataJson}></script>
+    <script is:inline set:html={rootMeScript}></script>
+  </body>
+</html>

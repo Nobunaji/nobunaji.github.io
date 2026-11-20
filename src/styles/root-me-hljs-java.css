@@ -1,0 +1,30 @@
+/* Java */
+#challenge-content pre code.language-java .hljs-keyword,
+#challenge-content pre code.language-java .hljs-meta .hljs-keyword {
+  color: #ff5555;
+}
+
+#challenge-content pre code.language-java .hljs-title.class_,
+#challenge-content pre code.language-java .hljs-type,
+#challenge-content pre code.language-java .hljs-built_in {
+  color: #8be9fd;
+}
+
+#challenge-content pre code.language-java .hljs-title.function_,
+#challenge-content pre code.language-java .hljs-function {
+  color: #50fa7b;
+}
+
+#challenge-content pre code.language-java .hljs-string,
+#challenge-content pre code.language-java .hljs-meta .hljs-string {
+  color: #f1fa8c;
+}
+
+#challenge-content pre code.language-java .hljs-number,
+#challenge-content pre code.language-java .hljs-literal {
+  color: #bd93f9;
+}
+
+#challenge-content pre code.language-java .hljs-comment {
+  color: #6272a4;
+}

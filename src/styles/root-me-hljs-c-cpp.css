@@ -1,0 +1,101 @@
+/* C / C++ */
+#challenge-content pre code.language-c .hljs-keyword,
+#challenge-content pre code.language-c .hljs-selector-tag,
+#challenge-content pre code.language-c .hljs-literal,
+#challenge-content pre code.language-c .hljs-section,
+#challenge-content pre code.language-c .hljs-link,
+#challenge-content pre code.language-c .hljs-meta .hljs-keyword,
+#challenge-content pre code.language-cpp .hljs-keyword,
+#challenge-content pre code.language-cpp .hljs-selector-tag,
+#challenge-content pre code.language-cpp .hljs-literal,
+#challenge-content pre code.language-cpp .hljs-section,
+#challenge-content pre code.language-cpp .hljs-link,
+#challenge-content pre code.language-cpp .hljs-meta .hljs-keyword {
+  color: #f92672;
+}
+
+#challenge-content pre code.language-c .hljs-keyword,
+#challenge-content pre code.language-cpp .hljs-keyword {
+  font-style: normal;
+}
+
+#challenge-content pre code.language-c .hljs-type,
+#challenge-content pre code.language-c .hljs-params,
+#challenge-content pre code.language-cpp .hljs-type,
+#challenge-content pre code.language-cpp .hljs-params {
+  color: #66d9ef;
+  font-style: italic;
+}
+
+#challenge-content pre code.language-c .hljs-string,
+#challenge-content pre code.language-c .hljs-meta .hljs-string,
+#challenge-content pre code.language-c .hljs-name,
+#challenge-content pre code.language-c .hljs-attribute,
+#challenge-content pre code.language-c .hljs-symbol,
+#challenge-content pre code.language-c .hljs-bullet,
+#challenge-content pre code.language-c .hljs-addition,
+#challenge-content pre code.language-c .hljs-variable,
+#challenge-content pre code.language-c .hljs-template-tag,
+#challenge-content pre code.language-c .hljs-template-variable,
+#challenge-content pre code.language-cpp .hljs-string,
+#challenge-content pre code.language-cpp .hljs-meta .hljs-string,
+#challenge-content pre code.language-cpp .hljs-name,
+#challenge-content pre code.language-cpp .hljs-attribute,
+#challenge-content pre code.language-cpp .hljs-symbol,
+#challenge-content pre code.language-cpp .hljs-bullet,
+#challenge-content pre code.language-cpp .hljs-addition,
+#challenge-content pre code.language-cpp .hljs-variable,
+#challenge-content pre code.language-cpp .hljs-template-tag,
+#challenge-content pre code.language-cpp .hljs-template-variable {
+  color: #e6db74;
+}
+
+#challenge-content pre code.language-c .hljs-function,
+#challenge-content pre code.language-c .hljs-title.function_,
+#challenge-content pre code.language-c .hljs-property,
+#challenge-content pre code.language-c .hljs-attr,
+#challenge-content pre code.language-c .hljs-selector-class,
+#challenge-content pre code.language-c .hljs-selector-id,
+#challenge-content pre code.language-cpp .hljs-function,
+#challenge-content pre code.language-cpp .hljs-title.function_,
+#challenge-content pre code.language-cpp .hljs-property,
+#challenge-content pre code.language-cpp .hljs-attr,
+#challenge-content pre code.language-cpp .hljs-selector-class,
+#challenge-content pre code.language-cpp .hljs-selector-id {
+  color: #a6e22e;
+}
+
+#challenge-content pre code.language-c .hljs-title,
+#challenge-content pre code.language-c .hljs-class .hljs-title,
+#challenge-content pre code.language-cpp .hljs-title,
+#challenge-content pre code.language-cpp .hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+#challenge-content pre code.language-c .hljs-number,
+#challenge-content pre code.language-c .hljs-regexp,
+#challenge-content pre code.language-c .hljs-built_in,
+#challenge-content pre code.language-c .hljs-builtin-name,
+#challenge-content pre code.language-cpp .hljs-number,
+#challenge-content pre code.language-cpp .hljs-regexp,
+#challenge-content pre code.language-cpp .hljs-built_in,
+#challenge-content pre code.language-cpp .hljs-builtin-name {
+  color: #ae81ff;
+}
+
+#challenge-content pre code.language-c .hljs-comment,
+#challenge-content pre code.language-c .hljs-quote,
+#challenge-content pre code.language-c .hljs-deletion,
+#challenge-content pre code.language-c .hljs-meta,
+#challenge-content pre code.language-cpp .hljs-comment,
+#challenge-content pre code.language-cpp .hljs-quote,
+#challenge-content pre code.language-cpp .hljs-deletion,
+#challenge-content pre code.language-cpp .hljs-meta {
+  color: #75715e;
+}
+
+#challenge-content pre code.language-c .hljs-punctuation,
+#challenge-content pre code.language-cpp .hljs-punctuation {
+  color: #e6db74;
+  font-style: normal;
+}

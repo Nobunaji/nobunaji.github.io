@@ -1,0 +1,85 @@
+---
+// Composant de toggle de langue réutilisable
+---
+
+<button id="lang-toggle" class="lang-toggle" aria-label="Toggle language" title="English / Français">
+  <span class="lang-icon">🇫🇷</span> <span class="lang-text">FR</span>
+</button>
+
+<style>
+  .lang-toggle {
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .lang-toggle:hover,
+  .lang-toggle:focus-visible {
+    background: rgba(0, 255, 65, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.6);
+    outline: none;
+  }
+
+  .lang-icon {
+    font-size: 1.1em;
+  }
+</style>
+
+<script>
+  function initLangToggle() {
+    let currentLang = localStorage.getItem('lang') || 'fr';
+
+    function updateLangIcon(lang: string) {
+      const langBtn = document.getElementById('lang-toggle');
+      if (!langBtn) return;
+
+      const langIcon = langBtn.querySelector('.lang-icon');
+      const langText = langBtn.querySelector('.lang-text');
+
+      if (lang === 'en') {
+        langIcon.textContent = '🇬🇧';
+        langText.textContent = 'EN';
+      } else {
+        langIcon.textContent = '🇫🇷';
+        langText.textContent = 'FR';
+      }
+    }
+
+    // Initialiser avec la langue stockée
+    updateLangIcon(currentLang);
+
+    // Ajouter le listener au bouton
+    const langBtn = document.getElementById('lang-toggle');
+    if (langBtn) {
+      langBtn.addEventListener('click', () => {
+        const newLang = currentLang === 'en' ? 'fr' : 'en';
+        currentLang = newLang;
+        updateLangIcon(newLang);
+        localStorage.setItem('lang', newLang);
+        // Dispatcher un événement personnalisé pour que les autres scripts puissent réagir
+        window.dispatchEvent(
+          new CustomEvent('langchange', { detail: { lang: newLang } })
+        );
+      });
+    }
+  }
+
+  // Initialiser quand le DOM est prêt
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLangToggle);
+  } else {
+    initLangToggle();
+  }
+</script>
