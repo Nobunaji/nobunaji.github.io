@@ -123,12 +123,23 @@ function buildTree(challenges) {
 
 let folderIdCounter = 0;
 let categoryStats: Map<string, { percentage: number; solved: number; total: number }> = new Map();
+let directoryToCategory: Map<string, string> = new Map();
 
 // Load category stats from file
 function loadCategoryStats() {
   try {
     console.log(`Looking for stats at: ${STATS_FILE}`);
     const statsData = JSON.parse(readFileSync(STATS_FILE, 'utf-8'));
+    
+    // Load directory-to-category mapping
+    if (statsData.directoryToCategory && typeof statsData.directoryToCategory === 'object') {
+      for (const [directory, category] of Object.entries(statsData.directoryToCategory)) {
+        directoryToCategory.set(directory, category as string);
+      }
+      console.log(`✓ Loaded directory mapping for ${directoryToCategory.size} directories`);
+    }
+    
+    // Load category stats
     if (statsData.categoryStats && typeof statsData.categoryStats === 'object') {
       for (const [category, stats] of Object.entries(statsData.categoryStats)) {
         categoryStats.set(category, stats as any);
@@ -148,12 +159,18 @@ function renderTree(node, depth = 0) {
       folderIdCounter += 1;
       const folderId = `tree-folder-${folderIdCounter}`;
       const childMarkup = renderTree(directory, depth + 1);
-      const stats = categoryStats.get(directory.name);
+      
+      // Get the French category name from the mapping
+      const categoryName = directoryToCategory.get(directory.name) || directory.name;
+      const stats = categoryStats.get(categoryName);
+      
       if (!stats && depth === 0) {
-        console.log(`No stats for directory: "${directory.name}". Available categories: ${Array.from(categoryStats.keys()).join(', ')}`);
+        console.log(`No stats for directory: "${directory.name}" (category: "${categoryName}"). Available categories: ${Array.from(categoryStats.keys()).join(', ')}`);
       }
       const statsHtml = stats ? `<span class="category-badge" title="${stats.solved}/${stats.total} challenges">${stats.percentage}%</span>` : '';
-      return `<li class="tree-item tree-folder" style="--depth:${depth};"><button type="button" class="tree-label tree-toggle" aria-expanded="true" aria-controls="${folderId}"><span class="folder-name">${escapeHtml(directory.name)}</span>${statsHtml}</button><ul id="${folderId}" class="tree-children">${childMarkup}</ul></li>`;
+      // Display the French category name (from mapping) instead of the English directory name
+      const displayName = depth === 0 ? categoryName : directory.name;
+      return `<li class="tree-item tree-folder" style="--depth:${depth};"><button type="button" class="tree-label tree-toggle" aria-expanded="true" aria-controls="${folderId}"><span class="folder-name">${escapeHtml(displayName)}</span>${statsHtml}</button><ul id="${folderId}" class="tree-children">${childMarkup}</ul></li>`;
     })
     .join('');
 

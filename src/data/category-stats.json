@@ -1,21 +1,64 @@
 {
+  "directoryToCategory": {
+    "App - Script": "App - Script",
+    "App - System": "App - Système",
+    "Web - Server": "Web - Serveur"
+  },
   "categoryStats": {
     "App - Script": {
-      "percentage": 75,
-      "solved": 15,
-      "total": 20
+      "percentage": 42,
+      "solved": 14,
+      "total": 33
     },
-    "App - System": {
-      "percentage": 100,
-      "solved": 3,
-      "total": 3
+    "App - Système": {
+      "percentage": 5,
+      "solved": 5,
+      "total": 93
     },
-    "Web - Server": {
-      "percentage": 60,
+    "Cracking": {
+      "percentage": 0,
+      "solved": 0,
+      "total": 70
+    },
+    "Cryptanalyse": {
+      "percentage": 5,
+      "solved": 4,
+      "total": 75
+    },
+    "Forensic": {
+      "percentage": 2,
+      "solved": 1,
+      "total": 48
+    },
+    "Programmation": {
+      "percentage": 0,
+      "solved": 0,
+      "total": 29
+    },
+    "Réaliste": {
+      "percentage": 0,
+      "solved": 0,
+      "total": 62
+    },
+    "Réseau": {
+      "percentage": 0,
+      "solved": 0,
+      "total": 35
+    },
+    "Stéganographie": {
+      "percentage": 21,
+      "solved": 5,
+      "total": 24
+    },
+    "Web - Client": {
+      "percentage": 24,
+      "solved": 10,
+      "total": 42
+    },
+    "Web - Serveur": {
+      "percentage": 6,
       "solved": 6,
-      "total": 10
+      "total": 97
     }
   }
 }
-
-
