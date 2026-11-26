@@ -278,9 +278,16 @@ const pageDataJson = JSON.stringify({
         <p id="challenge-meta"></p>
         <article id="challenge-content"></article>
       </section>
+
+      <footer class="rootme-footer">
+        <p>&copy; <span id="year"></span> Nobunaji - <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> - Hosted on Github Pages</p>
+      </footer>
     </main>
 
     <script id="rootme-page-data" type="application/json" set:html={pageDataJson}></script>
     <script is:inline set:html={rootMeScript}></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>

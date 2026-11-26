@@ -1,8 +1,9 @@
 {
   "directoryToCategory": {
     "App - Script": "App - Script",
-    "App - System": "App - Système",
-    "Web - Server": "Web - Serveur"
+    "App - System": "App - System",
+    "Cryptanalysis": "Cryptanalysis",
+    "Web - Server": "Web - Server"
   },
   "categoryStats": {
     "App - Script": {
@@ -21,8 +22,8 @@
       "total": 70
     },
     "Cryptanalyse": {
-      "percentage": 5,
-      "solved": 4,
+      "percentage": 19,
+      "solved": 14,
       "total": 75
     },
     "Forensic": {
@@ -46,8 +47,8 @@
       "total": 35
     },
     "Stéganographie": {
-      "percentage": 21,
-      "solved": 5,
+      "percentage": 50,
+      "solved": 12,
       "total": 24
     },
     "Web - Client": {

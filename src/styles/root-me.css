@@ -56,11 +56,28 @@ body::after {
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(280px, 34%) minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
   gap: 1rem;
   min-height: 100vh;
   padding: 1.2rem;
   max-width: 1320px;
   margin: 0 auto;
+  height: 100vh;
+}
+
+.tree-panel {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.content-panel {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.rootme-footer {
+  grid-column: 1 / -1;
+  grid-row: 2;
 }
 
 .tree-panel,
@@ -73,10 +90,13 @@ body::after {
 }
 
 .tree-panel {
+  grid-row: 1;
+  grid-column: 1;
   padding: 1rem;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: calc(100vh - 2.4rem);
+  max-height: calc(100vh - 7rem);
+  scrollbar-color: var(--neon-cyan) rgba(0, 0, 0, 0);
 }
 
 .panel-header {
@@ -117,7 +137,7 @@ body::after {
 }
 
 .back-link::before {
-  content: '<';
+  content: '<-';
 }
 
 .back-link:hover {
@@ -304,7 +324,7 @@ body::after {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  max-height: calc(100vh - 2.4rem);
+  max-height: calc(100vh - 2.4rem - 1rem);
 }
 
 #challenge-title {
@@ -327,9 +347,8 @@ body::after {
   line-height: 1.6;
   overflow: auto;
   flex: 1;
-  padding-right: 0.4rem;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 240, 255, 0.45) rgba(0, 0, 0, 0.2);
+  padding-right: 1rem;
+  scrollbar-color: var(--neon-cyan) rgba(0, 0, 0, 0);
 }
 
 #challenge-content h1,
@@ -426,13 +445,37 @@ body::after {
 
 #challenge-content::-webkit-scrollbar-track,
 .tree-panel::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0);
 }
 
 #challenge-content::-webkit-scrollbar-thumb,
 .tree-panel::-webkit-scrollbar-thumb {
-  background: rgba(0, 240, 255, 0.38);
+  background: var(--neon-cyan);
   border-radius: 999px;
+}
+
+.rootme-footer {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: rgba(0, 255, 65, 0.6);
+  border-top: 1px solid rgba(0, 255, 65, 0.2);
+  width: 100%;
+}
+
+.rootme-footer p {
+  margin: 0;
+}
+
+.rootme-footer a {
+  color: var(--neon-cyan);
+}
+
+.rootme-footer a:hover {
+  text-decoration: underline;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
 }
 
 @media (max-width: 900px) {

@@ -2,6 +2,7 @@
 import RootMeBadge from '../components/RootMeBadge.astro';
 import LangToggle from '../components/LangToggle.astro';
 import indexScript from '../scripts/index.js?raw';
+import matrixScript from '../scripts/matrix.js?raw';
 ---
 
 <html lang="fr">
@@ -33,12 +34,12 @@ import indexScript from '../scripts/index.js?raw';
           <p class="button-desc" data-en="My Root-Me challenge notes, organized by category." data-fr="Mes notes de challenges Root-Me, classées par catégorie.">Mes notes de challenges Root-Me, classées par catégorie.</p>
         </a>
 
-        <button class="feature-button">
+        <a class="feature-button" href="/cyber-codex/">
           <div class="button-header">
-            <h3 data-en="Lorem Ipsum" data-fr="Lorem Ipsum">Lorem Ipsum</h3>
+            <h3 data-en="CyberCodex" data-fr="CyberCodex">CyberCodex</h3>
           </div>
-          <p class="button-desc" data-en="Lorem Ipsum" data-fr="Lorem Ipsum">Lorem Ipsum</p>
-        </button>
+          <p class="button-desc" data-en="Notes, lessons, and tools about cybersecurity." data-fr="Notes, leçons et outils sur la cybersécurité.">Notes, leçons et outils sur la cybersécurité.</p>
+        </a>
 
         <button class="feature-button">
           <div class="button-header">
@@ -59,9 +60,10 @@ import indexScript from '../scripts/index.js?raw';
     </main>
 
     <footer>
-      <p>&copy; <span id="year"></span> Nobunaji - Hosted on Github Pages</p>
+      <p>&copy; <span id="year"></span> Nobunaji - <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> - Hosted on Github Pages</p>
     </footer>
 
+    <script is:inline set:html={matrixScript}></script>
     <script is:inline set:html={indexScript}></script>
   </body>
 </html>
