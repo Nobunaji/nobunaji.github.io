@@ -312,12 +312,23 @@ async function main() {
       const dirs = readdirSync(dataDir, { withFileTypes: true })
         .filter(d => d.isDirectory())
         .map(d => d.name);
+
+      const categoryAliases = {
+        'App - System': 'App - Système',
+        'Cryptanalysis': 'Cryptanalyse',
+        'Web - Server': 'Web - Serveur',
+      };
       
       for (const dir of dirs) {
+        if (categoryAliases[dir]) {
+          directoryToCategory[dir] = categoryAliases[dir];
+          continue;
+        }
+
         // Find matching category (may differ in accents/diacritics)
         const matchingCategory = sortedCategories.find(cat => {
-          const dirNorm = dir.toLowerCase().replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'e');
-          const catNorm = cat.toLowerCase().replace(/é/g, 'e').replace(/è/g, 'e').replace(/ê/g, 'e');
+          const dirNorm = dir.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+          const catNorm = cat.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
           return dirNorm === catNorm;
         }) || dir;
         

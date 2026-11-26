@@ -1,9 +1,9 @@
 {
   "directoryToCategory": {
     "App - Script": "App - Script",
-    "App - System": "App - System",
-    "Cryptanalysis": "Cryptanalysis",
-    "Web - Server": "Web - Server"
+    "App - System": "App - Système",
+    "Cryptanalysis": "Cryptanalyse",
+    "Web - Server": "Web - Serveur"
   },
   "categoryStats": {
     "App - Script": {
