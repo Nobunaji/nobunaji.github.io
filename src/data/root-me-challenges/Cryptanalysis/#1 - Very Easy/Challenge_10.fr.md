@@ -82,10 +82,10 @@ enable secret 5 $1$mERr$A419.HL58lq743wXS4kSM1
 username administrator secret 5 $1$mERr$yhf7f2RnC74CxKANvoekD.
 ```
 
-On isole les deux hashes dans un fichier (par exemple `ch53.txt`) et on lance **John the Ripper** au format `md5crypt` avec la wordlist `rockyou.txt` :
+On isole les deux hashes dans un fichier (par exemple `challenge.txt`) et on lance **John the Ripper** au format `md5crypt` avec la wordlist `rockyou.txt` :
 
 ```bash
-john --format=md5crypt --wordlist="/usr/share/wordlists/rockyou.txt" ch53.txt
+john --format=md5crypt --wordlist="/usr/share/wordlists/rockyou.txt" challenge.txt
 ```
 
 **Résultat obtenu :**
