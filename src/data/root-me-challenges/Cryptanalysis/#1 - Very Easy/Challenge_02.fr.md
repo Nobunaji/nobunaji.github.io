@@ -1,4 +1,4 @@
-# Exercice 2 - Encodage - UU
+# Challenge 2 - Encodage - UU
 
 ## Contexte
 * **Catégorie :** Cryptanalyse
@@ -27,9 +27,9 @@ uudecode -o - challenge.txt
 
 **Résultat obtenu :**
 > Very simple ;)\
-> PASS = ULTRASIMPLE
+> PASS = **<span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content">ULTRASIMPLE</span></span>**
 
-* **Mot de passe :** `ULTRASIMPLE`
+* **Flag :** <span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content"><code>ULTRASIMPLE</code></span></span>
 
 ## Explication
 L'encodage **UU** (*uuencode* / *uudecode*) permet de convertir des données binaires en caractères ASCII imprimables afin de les transmettre facilement sur des canaux texte (comme d'anciens protocoles mail ou forums).

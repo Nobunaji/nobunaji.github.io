@@ -1,4 +1,4 @@
-# Exercice 6 - Hash - MD5
+# Challenge 6 - Hash - MD5
 
 ## Contexte
 * **Catégorie :** Cryptanalyse
@@ -25,12 +25,12 @@ john --format=Raw-MD5 --wordlist="/usr/share/wordlists/rockyou.txt" challenge.tx
 > Loaded 1 password hash (Raw-MD5 [MD5 256/256 AVX2 8x3])\
 > Warning: no OpenMP support for this hash type, consider --fork=12\
 > Press 'q' or Ctrl-C to abort, almost any other key for status\
-> **weak**             (**?**)\
+> **<span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content">weak</span></span>**             (**?**)\
 > 1g 0:00:00:00 DONE (2026-11-26 18:00) 20.00g/s 23439Kp/s 23439Kc/s 23439KC/s webb26..wcballa\
 > Use the "--show --format=Raw-MD5" options to display all of the cracked passwords reliably\
 > Session completed.
 
-* **Mot de passe / Flag :** `weak`
+* **Flag :** <span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content"><code>weak</code></span></span>
 
 ## Explication
 L'algorithme **MD5** (*Message Digest 5*), développé par Ronald Rivest, produit une empreinte (condensat) fixe de **128 bits**, généralement représentée sous forme d'une chaîne hexadécimale de **32 caractères**.

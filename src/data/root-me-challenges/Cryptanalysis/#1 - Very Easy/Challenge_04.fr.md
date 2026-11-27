@@ -1,4 +1,4 @@
-# Exercice 4 - Hash - DCC2
+# Challenge 4 - Hash - DCC2
 
 ## Contexte
 * **Catégorie :** Cryptanalyse
@@ -58,12 +58,12 @@ john --format=mscash2 --wordlist="/usr/share/wordlists/rockyou.txt" challenge.tx
 > Loaded 1 password hash (mscash2, MS Cache Hash 2 (DCC2) [PBKDF2-SHA1 256/256 AVX2 8x])\
 > Will run 12 OpenMP threads\
 > Press 'q' or Ctrl-C to abort, almost any other key for status\
-> **ihatepasswords**   (**Administrator**)\
+> **<span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content">ihatepasswords</span></span>**   (**Administrator**)\
 > 1g 0:00:00:13 DONE (2026-11-26 17:53) 0.07358g/s 10991p/s 10991c/s 10991C/s ilovelloyd..gramma1\
 > Use the "--show --format=mscash2" options to display all of the cracked passwords reliably\
 > Session completed.
 
-* **Mot de passe :** `ihatepasswords`
+* **Flag :** <span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content"><code>ihatepasswords</code></span></span>
 
 ## Explication
 À partir de Windows Vista et Windows Server 2008, Microsoft a remplacé **DCCv1** (`mscash`) par **DCC2** (`mscash2`) pour stocker localement les identifiants de domaine mis en cache lorsque le contrôleur de domaine est injoignable.

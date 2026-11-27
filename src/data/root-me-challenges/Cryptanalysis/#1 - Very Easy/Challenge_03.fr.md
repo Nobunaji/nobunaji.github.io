@@ -1,4 +1,4 @@
-# Exercice 3 - Hash - DCC
+# Challenge 3 - Hash - DCC
 
 ## Contexte
 * **Catégorie :** Cryptanalyse
@@ -58,12 +58,12 @@ john --format=mscash --wordlist="/usr/share/wordlists/rockyou.txt" challenge.txt
 > Loaded 1 password hash (mscash, MS Cache Hash (DCC) [MD4 32/64])\
 > Will run 12 OpenMP threads\
 > Press 'q' or Ctrl-C to abort, almost any other key for status\
-> **ilikethat**        (**Administrator**)\
+> **<span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content">ilikethat</span></span>**        (**Administrator**)\
 > 1g 0:00:00:00 DONE (2026-11-26 17:41) 20.00g/s 3194Kp/s 3194Kc/s 3194KC/s mckinley1..greenarcher\
 > Use the "--show --format=mscash" options to display all of the cracked passwords reliably\
 > Session completed.
 
-* **Mot de passe :** `ilikethat`
+* **Flag :** <span class="spoiler-blur-container" data-inline><span class="spoiler-blur-overlay"><span class="spoiler-blur-text">[RÉDIGÉ]</span></span><span class="spoiler-blur-content"><code>ilikethat</code></span></span>
 
 ## Explication
 Sous Windows, lorsqu'un poste joint à un domaine Active Directory n'a pas accès au contrôleur de domaine (DC) lors d'une connexion, il vérifie les identifiants grâce aux **Domain Cached Credentials** (MSCache / DCC), stockées localement dans le registre (`NL$KM` protégeant les secrets LSA).
