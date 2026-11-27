@@ -498,3 +498,124 @@ body::after {
     max-height: none;
   }
 }
+
+/* Spoiler blur styling */
+.spoiler-blur-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.spoiler-blur-container[data-inline] {
+  display: inline-block;
+  min-width: 88px;
+  text-align: center;
+}
+
+.spoiler-blur-container[data-inline].revealed {
+  min-width: 0;
+  text-align: left;
+}
+
+.spoiler-blur-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  z-index: 10;
+  min-width: 60px;
+  padding: 0;
+}
+
+.spoiler-blur-container:hover .spoiler-blur-overlay {
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.spoiler-blur-container.revealed {
+  cursor: default;
+  pointer-events: auto;
+}
+
+.spoiler-blur-container.revealed .spoiler-blur-overlay {
+  display: none;
+}
+
+.spoiler-blur-container.revealed .spoiler-blur-content {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.spoiler-blur-text {
+  color: rgba(0, 240, 255, 0.9);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Glitch effect on hover */
+.spoiler-blur-container:not(.revealed):hover .spoiler-blur-text {
+  animation: glitch-text 0.3s ease-in-out infinite;
+}
+
+@keyframes glitch-text {
+  0%, 100% {
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.5), 2px 2px 0 rgba(255, 0, 85, 0.3);
+  }
+  25% {
+    text-shadow: -2px 2px 0 rgba(0, 240, 255, 0.5), 2px -2px 0 rgba(0, 255, 100, 0.3);
+  }
+  50% {
+    text-shadow: 2px -2px 0 rgba(0, 240, 255, 0.5), -2px 2px 0 rgba(255, 100, 0, 0.3);
+  }
+  75% {
+    text-shadow: -2px -2px 0 rgba(0, 240, 255, 0.5), 2px 2px 0 rgba(100, 0, 255, 0.3);
+  }
+}
+
+/* Matrix decryption animation */
+.spoiler-blur-content.decrypting {
+  animation: matrix-decrypt 0.6s ease-in-out forwards;
+}
+
+@keyframes matrix-decrypt {
+  0% {
+    filter: blur(0px);
+  }
+  10%, 20%, 30%, 40%, 50% {
+    filter: blur(0.5px);
+  }
+  100% {
+    filter: blur(0px);
+  }
+}
+
+.spoiler-blur-content {
+  padding: 0;
+  border: 1px solid rgba(0, 240, 255, 0.28);
+  border-radius: 4px;
+  background: rgba(0, 240, 255, 0.06);
+  filter: blur(0px);
+  transition: filter 0.3s ease;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.spoiler-blur-container:not(.revealed) .spoiler-blur-content {
+  filter: blur(6px);
+}
+
+.spoiler-blur-container:not(.revealed) .spoiler-blur-content * {
+  user-select: none;
+  pointer-events: none;
+}

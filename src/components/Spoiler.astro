@@ -1,0 +1,81 @@
+---
+// src/components/Spoiler.astro
+interface Props {
+  title?: string;
+}
+
+const { title = "Cliquez pour révéler" } = Astro.props;
+---
+
+<div class="spoiler-blur" data-spoiler-blur>
+  <div class="spoiler-blur-overlay">
+    <span class="spoiler-blur-text">{title}</span>
+  </div>
+  <div class="spoiler-blur-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .spoiler-blur {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .spoiler-blur-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .spoiler-blur:hover .spoiler-blur-overlay {
+    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .spoiler-blur.revealed .spoiler-blur-overlay {
+    display: none;
+  }
+
+  .spoiler-blur-text {
+    color: rgba(0, 240, 255, 0.9);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    user-select: none;
+  }
+
+  .spoiler-blur-content {
+    padding: 0.9rem;
+    border: 1px solid rgba(0, 240, 255, 0.28);
+    border-radius: 6px;
+    background: rgba(0, 240, 255, 0.06);
+    margin: 0.8rem 0;
+    filter: blur(0px);
+    transition: filter 0.3s ease;
+  }
+
+  .spoiler-blur:not(.revealed) .spoiler-blur-content {
+    filter: blur(6px);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-spoiler-blur]').forEach((element) => {
+    element.addEventListener('click', (e) => {
+      if (!element.classList.contains('revealed')) {
+        element.classList.add('revealed');
+        e.stopPropagation();
+      }
+    });
+  });
+</script>

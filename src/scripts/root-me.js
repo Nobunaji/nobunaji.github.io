@@ -56,6 +56,53 @@ function initializeTreeToggles() {
   });
 }
 
+function initializeSpoilers() {
+  document.querySelectorAll('.spoiler-blur-container').forEach((spoiler) => {
+    if (!(spoiler instanceof HTMLElement)) {
+      return;
+    }
+
+    spoiler.addEventListener('click', (e) => {
+      if (!spoiler.classList.contains('revealed')) {
+        const contentElement = spoiler.querySelector('.spoiler-blur-content');
+        const codeElement = contentElement?.querySelector('code');
+        const textTarget = codeElement || contentElement;
+        const originalText = textTarget?.textContent || '';
+        
+        // Add decryption animation class
+        if (contentElement instanceof HTMLElement) {
+          contentElement.classList.add('decrypting');
+        }
+        
+        // Matrix decryption effect
+        let decryptStep = 0;
+        const decryptInterval = setInterval(() => {
+          if (textTarget instanceof HTMLElement) {
+            if (decryptStep < 15) {
+              // Generate random matrix characters
+              const matrixChars = '01αβγδεζηθικλμνξοπρστυφχψω!@#$%^&*()[]{}';
+              let randomText = '';
+              for (let i = 0; i < originalText.length; i++) {
+                randomText += matrixChars[Math.floor(Math.random() * matrixChars.length)];
+              }
+              textTarget.textContent = randomText;
+            } else {
+              // Reveal final text
+              textTarget.textContent = originalText;
+              clearInterval(decryptInterval);
+              contentElement?.classList.remove('decrypting');
+            }
+          }
+          decryptStep++;
+        }, 40);
+        
+        spoiler.classList.add('revealed');
+        e.stopPropagation();
+      }
+    });
+  });
+}
+
 function updateLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('lang', lang);
@@ -120,6 +167,9 @@ function showChallenge(challengeId) {
       openAncestorFolders(button);
     }
   });
+
+  // Initialize spoilers for the new content
+  initializeSpoilers();
 }
 
 document.querySelectorAll('.challenge-link').forEach((button) => {
@@ -133,6 +183,7 @@ document.querySelectorAll('.challenge-link').forEach((button) => {
 });
 
 initializeTreeToggles();
+initializeSpoilers();
 setDefaultContent();
 
 const canvas = document.getElementById('matrix');
